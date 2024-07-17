@@ -1,0 +1,1286 @@
+{
+	"info": {
+		"_postman_id": "1f01291a-27fc-4dc5-8d07-8f25fe408b03",
+		"name": "M4_Integration _tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "25003897",
+		"_collection_link": "https://orange-firefly-262917.postman.co/workspace/Test~e1ad02f2-ca24-46d1-ba6c-ac232fcdbcdb/collection/25003897-1f01291a-27fc-4dc5-8d07-8f25fe408b03?action=share&source=collection_link&creator=25003897"
+	},
+	"item": [
+		{
+			"name": "Lesson 4.1",
+			"item": [
+				{
+					"name": "Registration",
+					"item": [
+						{
+							"name": "Registration a new student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"The response has a header server with value Cowboy\", function () {",
+											"    pm.response.to.have.header(\"Server\", \"Cowboy\"); ",
+											"});",
+											"",
+											"const student = JSON.parse(pm.request.body.raw);",
+											"",
+											"pm.environment.set(\"newStudentLogin\", student.login);",
+											"pm.environment.set(\"newStudentName\", student.firstName);",
+											"pm.environment.set(\"newStudentSurname\", student.lastName);",
+											"pm.environment.set(\"studentEmail\", student.email);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"ola{{$randomInt}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"string\",\n  \"authorities\": [\n    \"ROLE_USER_STUDENT\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/register"
+							},
+							"response": []
+						},
+						{
+							"name": "Check an authority of a new student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"The body has a ROLE_USER_STUDENT authority\", function () {",
+											"    pm.expect(pm.response.json().authorities).to.eql([\"ROLE_USER_STUDENT\"]);",
+											"});",
+											"",
+											"",
+											"let response = pm.response.json();",
+											"let id = response.id;",
+											"pm.environment.set(\"id\", id);",
+											"",
+											"console.log(\"Id is saved like:\", id);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/admin/users/{{newStudentLogin}}"
+							},
+							"response": []
+						},
+						{
+							"name": "The activation a new student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The user is activated\", function () {\r",
+											"    pm.expect(pm.response.json().activated).to.eql(true)});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"{{id}}\",\r\n  \"login\": \"{{newStudentLogin}}\",\r\n  \"firstName\": \"{{newStudentName}}\",\r\n  \"lastName\": \"{{newStudentSurname}}\",\r\n  \"email\": \"{{studentEmail}}\", \r\n  \"activated\": true,\r\n  \"langKey\": \"string\",\r\n  \"authorities\": [\r\n    \"ROLE_USER_STUDENT\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/admin/users"
+							},
+							"response": []
+						},
+						{
+							"name": "Registration a new teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201 Created\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"The response has a header server with value Cowboy\", function () {",
+											"    pm.response.to.have.header(\"Server\", \"Cowboy\"); ",
+											"});",
+											"",
+											"const teacher = JSON.parse(pm.request.body.raw);",
+											"",
+											"pm.environment.set(\"newTeacherLogin\", teacher.login);",
+											"pm.environment.set(\"newTeacherName\", teacher.firstName);",
+											"pm.environment.set(\"newTeacherSurname\", teacher.lastName);",
+											"pm.environment.set(\"teacherEmail\", teacher.email);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"oleandr{{$randomInt}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"langKey\": \"en\",\n  \"authorities\": [\n    \"ROLE_USER_TEACHER\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/register"
+							},
+							"response": []
+						},
+						{
+							"name": "Check an authority of a new teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"The body has a ROLE_USER_TEACHER authority\", function () {",
+											"    pm.expect(pm.response.json().authorities).to.eql([\"ROLE_USER_TEACHER\"]);",
+											"});",
+											"",
+											"",
+											"let response = pm.response.json();",
+											"let idTeacher = response.id;",
+											"pm.environment.set(\"id_Teacher\", idTeacher);",
+											"",
+											"console.log(\"Id is saved like:\", idTeacher);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/admin/users/{{newTeacherLogin}}"
+							},
+							"response": []
+						},
+						{
+							"name": "The activation a new teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The user is activated\", function () {\r",
+											"    pm.expect(pm.response.json().activated).to.eql(true)});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"{{id_Teacher}}\",\r\n  \"login\": \"{{newTeacherLogin}}\",\r\n  \"firstName\": \"{{newTeacherName}}\",\r\n  \"lastName\": \"{{newTeacherSurname}}\",\r\n  \"email\": \"{{teacherEmail}}\", \r\n  \"activated\": true,\r\n  \"langKey\": \"string\",\r\n  \"authorities\": [\r\n    \"ROLE_USER_TEACHER\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/admin/users"
+							},
+							"response": []
+						},
+						{
+							"name": "Registration a new user without body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 Bad Request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"The JSON has a detail key with additional info\", function () {",
+											"    pm.expect(pm.response.json().detail).to.eql(\"Failed to read request\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/register"
+							},
+							"response": []
+						},
+						{
+							"name": "Registration with empty login value",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 Bad Request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"The JSON has a title key with additional info\", function () {",
+											"    pm.expect(pm.response.json().title).to.eql(\"Method argument not valid\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"imageUrl\": \"string\",\n  \"activated\": true,\n  \"langKey\": \"ru\",\n  \"authorities\": [\n    \"ROLE_USER_STUDENT\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/register"
+							},
+							"response": []
+						},
+						{
+							"name": "Registration a new user with numbers in the email value",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 Bad Request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"The JSON has a detail key with additional info\", function () {",
+											"    pm.expect(pm.response.json().detail).to.eql(\"Failed to read request\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"{{$randomNoun}}\",\n  \"firstName\": {{$randomUserName}},\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomInt}}\",\n  \"activated\": true,\n  \"langKey\": \"en\",\n  \"authorities\": [\n    \"ROLE_USER_STUDENT\"\n  ],\n  \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/register"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Authentication of the student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"The id token is available in the body\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"id_token\"); ",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"let stunetToken = jsonData.id_token;",
+											"pm.environment.set(\"stunetToken\", jsonData.id_token);",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"username\": \"{{newStudentLogin}}\",\n\"password\": \"{{password}}\",\n\"rememberMe\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/authenticate"
+							},
+							"response": []
+						},
+						{
+							"name": "Authentication of the teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"The id token is available in the body\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"id_token\"); ",
+											"});",
+											"",
+											"let jsonData = pm.response.json();",
+											"let teacherToken = jsonData.id_token;",
+											"pm.environment.set(\"teacherToken\", jsonData.id_token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"username\": \"{{newTeacherLogin}}\",\n\"password\": \"{{password}}\",\n\"rememberMe\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/authenticate"
+							},
+							"response": []
+						},
+						{
+							"name": "Authentication with invalid username",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401 Unathorized\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});",
+											"",
+											"pm.test(\"The JSON has a detail key with additional info\", function () {",
+											"    pm.expect(pm.response.json().detail).to.eql(\"Bad credentials\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"username\": \"Oliander900\",\n\"password\": \"{{password}}\",\n\"rememberMe\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/authenticate"
+							},
+							"response": []
+						},
+						{
+							"name": "Authentication  with invalid password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 Bad Request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"The JSON has a title key with additional info\", function () {",
+											"    pm.expect(pm.response.json().title).to.eql(\"Method argument not valid\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"username\": \"{{newTeacherLogin}}\",\n\"password\": \"12\",\n\"rememberMe\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/authenticate"
+							},
+							"response": []
+						},
+						{
+							"name": "Login_student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"The body has a ROLE_USER_STUDENT authority\", function () {\r",
+											"    pm.expect(pm.response.json().authorities).to.eql([\"ROLE_USER_STUDENT\"]);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{stunetToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{baseURL}}/api/account"
+							},
+							"response": []
+						},
+						{
+							"name": "Login_teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"The body has a ROLE_USER_STUDENT authority\", function () {\r",
+											"    pm.expect(pm.response.json().authorities).to.eql([\"ROLE_USER_TEACHER\"]);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{teacherToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{baseURL}}/api/account"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Lesson 4.2",
+			"item": [
+				{
+					"name": "Tasks",
+					"item": [
+						{
+							"name": "Get a lisf of tasks",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"const task = pm.response.json()",
+											"",
+											"pm.environment.set(\"taskID\", task[0].id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{baseURL}}/api/tasks"
+							},
+							"response": []
+						},
+						{
+							"name": "Get an info about task by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{baseURL}}/api/tasks/{{taskID}}"
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", () => {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.variables.set(\"createdTaskID\", _.random(00000,99999));"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbl9hdXRvbWF0aW9uIiwiZXhwIjoxNzIzODI4ODc5LCJhdXRoIjoiUk9MRV9BRE1JTiIsImlhdCI6MTcyMTIzNjg3OX0.-WaM8_d-mIOFPApZ2TDOqHhZZgNaKObhRPl_nOIkXcN7u1GjYoTx7375BOhOjZPVtIRCIBdAmLLCOvQdjd9ulA"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"text\": \"Plastic\",\n  \"answer\": \"York \",\n  \"title\": \"Loan protocol\"\n} ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/tasks"
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Task without body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", () => {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbl9hdXRvbWF0aW9uIiwiZXhwIjoxNzIzODI4ODc5LCJhdXRoIjoiUk9MRV9BRE1JTiIsImlhdCI6MTcyMTIzNjg3OX0.-WaM8_d-mIOFPApZ2TDOqHhZZgNaKObhRPl_nOIkXcN7u1GjYoTx7375BOhOjZPVtIRCIBdAmLLCOvQdjd9ulA"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/tasks"
+							},
+							"response": []
+						},
+						{
+							"name": "Update a Task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{taskID}},\n  \"text\": \"{{$randomWords}}\",\n  \"answer\": \"{{$randomWords}}\",\n  \"title\": \"{{$randomWords}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/tasks/{{taskID}}"
+							},
+							"response": []
+						},
+						{
+							"name": "Update a text of Task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", () => {",
+											"    pm.response.to.have.status(500);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{taskID}},\n  \"text\": \"{{$randomWords}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/tasks/{{taskID}}"
+							},
+							"response": []
+						},
+						{
+							"name": "Update a Task without body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", () => {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"url": "{{baseURL}}/api/tasks/{{taskID}}"
+							},
+							"response": []
+						},
+						{
+							"name": "Update a text of task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{taskID}},\n  \"text\": \"{{$randomWords}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/tasks/{{taskID}}"
+							},
+							"response": []
+						},
+						{
+							"name": "Update an answer of task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{taskID}},\n  \"answer\": \"{{$randomWords}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/tasks/{{taskID}}"
+							},
+							"response": []
+						},
+						{
+							"name": "Update a title of task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Verify that all values are correct \", () => {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.id).that.is.a('number');",
+											"    pm.expect(jsonData.text).that.is.a('string');",
+											"    pm.expect(jsonData.answer).that.is.a('string');",
+											"    pm.expect(jsonData.title).that.is.a('string');",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{taskID}},\n  \"title\": \"{{$randomWords}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/tasks/{{taskID}}"
+							},
+							"response": []
+						},
+						{
+							"name": "Update a task without body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 415\", () => {",
+											"    pm.response.to.have.status(415);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseURL}}/api/tasks/{{taskID}}"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a Task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{adminToken}}"
+									}
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbl9hdXRvbWF0aW9uIiwiZXhwIjoxNzIzODQwNzM5LCJhdXRoIjoiUk9MRV9BRE1JTiIsImlhdCI6MTcyMTI0ODczOX0.940A2JPoa2LOEeG8YFkcnDu30uVTmRyJLqA3WkES-fNzvgWz07BMJQOkgfHrdy6TCFVaJnT55UZfh_VztLhajg"
+									}
+								],
+								"url": "{{baseURL}}/api/tasks/{{taskID}}"
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": {
+							"token": "{{accessToken}}"
+						}
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Delete Student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204 No Content\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{adminToken}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{baseURL}}/api/admin/users/{{newStudentLogin}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Teacher",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204 No Content\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{adminToken}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{baseURL}}/api/admin/users/{{newTeacherLogin}}"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "newStudenLogin",
+			"value": ""
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		}
+	]
+}
