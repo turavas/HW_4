@@ -1,0 +1,862 @@
+{
+	"id": "6a63b775-33d5-4340-9e77-694cc3cd1480",
+	"name": "M4_Integration _tests",
+	"timestamp": "2024-07-18T09:36:29.204Z",
+	"collection_id": "25003897-1f01291a-27fc-4dc5-8d07-8f25fe408b03",
+	"folder_id": "25003897-dec9b8c2-c126-45d8-b320-babc45df19e5",
+	"environment_id": "25003897-b8ee5de8-2255-4c54-9630-ba053e75334e",
+	"totalPass": 157,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2024-07-18T09:35:47.074Z",
+	"totalFail": 5,
+	"results": [
+		{
+			"id": "f203cdf6-e448-46f6-8b5d-a58ae4f82713",
+			"name": "Get a lisf of tasks",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks",
+			"time": 70,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 9,
+					"fail": 0
+				}
+			},
+			"times": [
+				458,
+				318,
+				348,
+				352,
+				75,
+				154,
+				85,
+				295,
+				70
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "4b0addd1-2fb6-423a-b217-845972bd5058",
+			"name": "Get an info about task by ID",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/57365",
+			"time": 363,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Verify that all values are correct ": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 9,
+					"fail": 0
+				},
+				"Verify that all values are correct ": {
+					"pass": 9,
+					"fail": 0
+				}
+			},
+			"times": [
+				288,
+				321,
+				250,
+				348,
+				329,
+				350,
+				342,
+				353,
+				363
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				}
+			]
+		},
+		{
+			"id": "07be2689-8c18-4001-8382-b7e6c81b4747",
+			"name": "Create a Task",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks",
+			"time": 239,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Verify that all values are correct ": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 9,
+					"fail": 0
+				},
+				"Verify that all values are correct ": {
+					"pass": 9,
+					"fail": 0
+				}
+			},
+			"times": [
+				339,
+				319,
+				278,
+				352,
+				287,
+				334,
+				331,
+				351,
+				239
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 201": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 201": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 201": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 201": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 201": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 201": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 201": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 201": true,
+					"Verify that all values are correct ": true
+				}
+			]
+		},
+		{
+			"id": "a82a6a84-3521-47e8-b31b-7c0c21c21ce1",
+			"name": "Create a Task without body",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks",
+			"time": 329,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 9,
+					"fail": 0
+				}
+			},
+			"times": [
+				311,
+				344,
+				334,
+				242,
+				283,
+				310,
+				254,
+				325,
+				329
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "eeba7952-0588-45fa-ab39-c21b4ca53bf8",
+			"name": "Update a Task",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/57365",
+			"time": 360,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Verify that all values are correct ": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 9,
+					"fail": 0
+				},
+				"Verify that all values are correct ": {
+					"pass": 9,
+					"fail": 0
+				}
+			},
+			"times": [
+				363,
+				250,
+				354,
+				295,
+				338,
+				286,
+				314,
+				357,
+				360
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				}
+			]
+		},
+		{
+			"id": "63a4d6f3-51c8-4aa9-996e-741cee2795a8",
+			"name": "Update a text of Task",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/57365",
+			"time": 462,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 9,
+					"fail": 0
+				}
+			},
+			"times": [
+				314,
+				324,
+				349,
+				180,
+				316,
+				342,
+				377,
+				247,
+				462
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				},
+				{
+					"Status code is 500": true
+				},
+				{
+					"Status code is 500": true
+				},
+				{
+					"Status code is 500": true
+				},
+				{
+					"Status code is 500": true
+				},
+				{
+					"Status code is 500": true
+				},
+				{
+					"Status code is 500": true
+				},
+				{
+					"Status code is 500": true
+				},
+				{
+					"Status code is 500": true
+				}
+			]
+		},
+		{
+			"id": "855c09c2-872d-4ff7-98e2-63d331c1ab06",
+			"name": "Update a Task without body",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/57365",
+			"time": 204,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 9,
+					"fail": 0
+				}
+			},
+			"times": [
+				347,
+				350,
+				354,
+				200,
+				313,
+				347,
+				315,
+				339,
+				204
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "579172f0-bda5-4c33-817b-b909087881fe",
+			"name": "Update a text of task",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/57365",
+			"time": 286,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Verify that all values are correct ": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 9,
+					"fail": 0
+				},
+				"Verify that all values are correct ": {
+					"pass": 9,
+					"fail": 0
+				}
+			},
+			"times": [
+				338,
+				343,
+				238,
+				273,
+				364,
+				355,
+				283,
+				359,
+				286
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				}
+			]
+		},
+		{
+			"id": "36deae4d-42ff-4c83-bfc1-4859827d624e",
+			"name": "Update an answer of task",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/57365",
+			"time": 355,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Verify that all values are correct ": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 9,
+					"fail": 0
+				},
+				"Verify that all values are correct ": {
+					"pass": 9,
+					"fail": 0
+				}
+			},
+			"times": [
+				329,
+				346,
+				328,
+				330,
+				232,
+				357,
+				249,
+				352,
+				355
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				}
+			]
+		},
+		{
+			"id": "dd96554e-5b6d-46a1-a3d2-c1d81c72fb32",
+			"name": "Update a title of task",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/57365",
+			"time": 357,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Verify that all values are correct ": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 9,
+					"fail": 0
+				},
+				"Verify that all values are correct ": {
+					"pass": 9,
+					"fail": 0
+				}
+			},
+			"times": [
+				315,
+				364,
+				352,
+				312,
+				237,
+				260,
+				168,
+				245,
+				357
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				},
+				{
+					"Status code is 200": true,
+					"Verify that all values are correct ": true
+				}
+			]
+		},
+		{
+			"id": "f6ca8f78-68fc-400d-8691-aa52130f94f0",
+			"name": "Update a task without body",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/57365",
+			"time": 335,
+			"responseCode": {
+				"code": 415,
+				"name": "Unsupported Media Type"
+			},
+			"tests": {
+				"Status code is 415": true
+			},
+			"testPassFailCounts": {
+				"Status code is 415": {
+					"pass": 9,
+					"fail": 0
+				}
+			},
+			"times": [
+				314,
+				355,
+				356,
+				376,
+				349,
+				334,
+				230,
+				352,
+				335
+			],
+			"allTests": [
+				{
+					"Status code is 415": true
+				},
+				{
+					"Status code is 415": true
+				},
+				{
+					"Status code is 415": true
+				},
+				{
+					"Status code is 415": true
+				},
+				{
+					"Status code is 415": true
+				},
+				{
+					"Status code is 415": true
+				},
+				{
+					"Status code is 415": true
+				},
+				{
+					"Status code is 415": true
+				},
+				{
+					"Status code is 415": true
+				}
+			]
+		},
+		{
+			"id": "8fb03e82-44ca-4dfd-a68e-39b57a9c308c",
+			"name": "Delete a Task",
+			"url": "https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/57365",
+			"time": 358,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"Status code is 204": false
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 4,
+					"fail": 5
+				}
+			},
+			"times": [
+				290,
+				342,
+				362,
+				310,
+				346,
+				313,
+				334,
+				355,
+				358
+			],
+			"allTests": [
+				{
+					"Status code is 204": false
+				},
+				{
+					"Status code is 204": false
+				},
+				{
+					"Status code is 204": false
+				},
+				{
+					"Status code is 204": true
+				},
+				{
+					"Status code is 204": true
+				},
+				{
+					"Status code is 204": true
+				},
+				{
+					"Status code is 204": false
+				},
+				{
+					"Status code is 204": true
+				},
+				{
+					"Status code is 204": false
+				}
+			]
+		}
+	],
+	"count": 9,
+	"totalTime": 33596,
+	"collection": {
+		"requests": [
+			{
+				"id": "f203cdf6-e448-46f6-8b5d-a58ae4f82713",
+				"method": "GET"
+			},
+			{
+				"id": "4b0addd1-2fb6-423a-b217-845972bd5058",
+				"method": "GET"
+			},
+			{
+				"id": "07be2689-8c18-4001-8382-b7e6c81b4747",
+				"method": "POST"
+			},
+			{
+				"id": "a82a6a84-3521-47e8-b31b-7c0c21c21ce1",
+				"method": "POST"
+			},
+			{
+				"id": "eeba7952-0588-45fa-ab39-c21b4ca53bf8",
+				"method": "PUT"
+			},
+			{
+				"id": "63a4d6f3-51c8-4aa9-996e-741cee2795a8",
+				"method": "PUT"
+			},
+			{
+				"id": "855c09c2-872d-4ff7-98e2-63d331c1ab06",
+				"method": "PUT"
+			},
+			{
+				"id": "579172f0-bda5-4c33-817b-b909087881fe",
+				"method": "PATCH"
+			},
+			{
+				"id": "36deae4d-42ff-4c83-bfc1-4859827d624e",
+				"method": "PATCH"
+			},
+			{
+				"id": "dd96554e-5b6d-46a1-a3d2-c1d81c72fb32",
+				"method": "PATCH"
+			},
+			{
+				"id": "f6ca8f78-68fc-400d-8691-aa52130f94f0",
+				"method": "PATCH"
+			},
+			{
+				"id": "8fb03e82-44ca-4dfd-a68e-39b57a9c308c",
+				"method": "DELETE"
+			}
+		]
+	}
+}

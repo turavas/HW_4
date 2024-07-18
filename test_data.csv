@@ -1,0 +1,10 @@
+id,text,answer,title
+100,string1,string2,string3
+,string1,string2,string3
+100,,string2,string3
+100,string1,,string3
+100,string1,string2,
+444,444,444,444
+$%%,$%%,$%%,$%%
+0,0,0,0
+100,,,
