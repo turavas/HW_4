@@ -1624,13 +1624,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseURL}}/api/tasks/{{taskID}}",
+									"raw": "{{baseURL}}/api/user-tasks/{{taskID}}",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
 										"api",
-										"tasks",
+										"user-tasks",
 										"{{taskID}}"
 									]
 								}
