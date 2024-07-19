@@ -1644,7 +1644,7 @@
 						"bearer": [
 							{
 								"key": "token",
-								"value": "{{accessToken}}",
+								"value": "{{adminToken}}",
 								"type": "string"
 							}
 						]
@@ -1653,21 +1653,21 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"id": "ecd66964-a9c8-4f71-973d-395abb60d28d",
 								"type": "text/javascript",
 								"exec": [
 									""
-								],
-								"id": "ba905990-965c-4dea-b029-992146f755b2"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"id": "f776b46f-81c5-47ef-a9ac-0436f2e4aaf1",
 								"type": "text/javascript",
 								"exec": [
 									""
-								],
-								"id": "c60da1c3-ebab-4d46-b455-b6a9b82c7ae0"
+								]
 							}
 						}
 					]
